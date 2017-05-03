@@ -34,7 +34,7 @@ class GameViewController: UIViewController {
     
     var imageName = ""
     var showingCard = false
-    var timer: NSTimer?
+    var timer: Timer?
 
     
     
@@ -49,7 +49,7 @@ class GameViewController: UIViewController {
         back.image = UIImage(named: "Back_Card.png")
         front.image =  UIImage(named: "Back_Card.png")
         
-        tapRec.addTarget(self, action: "tapGesture")
+        tapRec.addTarget(self, action: #selector(GameViewController.tapGesture))
         
         
     }
@@ -60,7 +60,7 @@ class GameViewController: UIViewController {
     }
     
 
-    @IBAction func getCard(sender: AnyObject) {
+    @IBAction func getCard(_ sender: AnyObject) {
         if showingCard{
             getCard()
         }else{
@@ -81,11 +81,11 @@ class GameViewController: UIViewController {
     }
     
     func fadeOutCardView(){
-        UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {self.cardView.alpha = 0}, completion: nil)
+        UIView.animate(withDuration: 0.5, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {self.cardView.alpha = 0}, completion: nil)
     }
     
     func fadeInCardView(){
-        UIView.animateWithDuration(0.5, delay: 0 , options: UIViewAnimationOptions.CurveEaseIn, animations: {self.cardView.alpha = 1.0}, completion: nil)
+        UIView.animate(withDuration: 0.5, delay: 0 , options: UIViewAnimationOptions.curveEaseIn, animations: {self.cardView.alpha = 1.0}, completion: nil)
     }
     
     func tapGesture(){
@@ -98,38 +98,38 @@ class GameViewController: UIViewController {
             cardView.addGestureRecognizer(tapRec)
         }
     }
-    @IBAction func flipCardButton(sender: AnyObject) {
+    @IBAction func flipCardButton(_ sender: AnyObject) {
     
         flipCard()
     }
     
     func flipCard(){
         if showingCard{
-        UIView.transitionFromView(front, toView: back, duration: 1, options: [UIViewAnimationOptions.TransitionFlipFromLeft, UIViewAnimationOptions.ShowHideTransitionViews], completion: nil)
+        UIView.transition(from: front, to: back, duration: 1, options: [UIViewAnimationOptions.transitionFlipFromLeft, UIViewAnimationOptions.showHideTransitionViews], completion: nil)
         showingCard = false
-        timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "showGameDescription", userInfo: nil, repeats: false)
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(GameViewController.showGameDescription), userInfo: nil, repeats: false)
     }else{
         exitGameDescription()
-        UIView.transitionFromView(back, toView: front, duration: 1, options:  [UIViewAnimationOptions.TransitionFlipFromRight, UIViewAnimationOptions.ShowHideTransitionViews], completion: nil)
+        UIView.transition(from: back, to: front, duration: 1, options:  [UIViewAnimationOptions.transitionFlipFromRight, UIViewAnimationOptions.showHideTransitionViews], completion: nil)
         showingCard = true
         }
     }
 
-    func roundCorners(objectName: AnyObject, level: CGFloat){
+    func roundCorners(_ objectName: AnyObject, level: CGFloat){
         objectName.layer.cornerRadius = level
     }
     
     
     func showGameDescription(){
-        blurVisualEffectView.hidden = false
+        blurVisualEffectView.isHidden = false
         gameNameLabel.text = gameLabel.text
-        gameNameLabel.hidden = false
+        gameNameLabel.isHidden = false
         gameDescriptionLabel.text = james.gameByCardDictionary[imageName]![1]
         
     }
     
     func exitGameDescription(){
-        blurVisualEffectView.hidden = true
+        blurVisualEffectView.isHidden = true
     }
 }
 

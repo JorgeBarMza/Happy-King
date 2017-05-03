@@ -28,10 +28,10 @@ class MenuViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func exitSegue(sender: UIStoryboardSegue){
+    @IBAction func exitSegue(_ sender: UIStoryboardSegue){
     }
     
-    func roundCorners(buttonName: UIButton){
+    func roundCorners(_ buttonName: UIButton){
         buttonName.layer.cornerRadius = 10
     }
 }
